@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  api:
+    build: .
+    ports:
+      - "5000:80"
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=db;Database=apipostgre;Username=postgres;Password=senha
+      - Jwt__Key=minha_chave_super_secreta_123
+      - Jwt__Issuer=apipostgre
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: senha
+      POSTGRES_DB: apipostgre
+    ports:
+      - "5432:5432"
